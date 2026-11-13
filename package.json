@@ -1,0 +1,43 @@
+{
+	"name": "virtual-walkthrough",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "eslint .",
+		"modulize-wasm": "node ./pano-stitcher/modulize.js",
+		"wasm": "wasm-pack build ./pano-stitcher --target web --release --out-dir ../static/wasm && npm run modulize-wasm",
+		"modulize-wasm:netlify": "node ./pano-stitcher/modulize.js netlify",
+		"wasm:netlify": "cd gpx-file-processor-wasm && wasm-pack build --target web --release && cd .. && npm run modulize-wasm:netlify",
+		"wasm:test": "cargo test --manifest-path pano-stitcher/Cargo.toml && wasm-pack test --node pano-stitcher",
+		"check-all": "npm run wasm:test && npm run wasm && npm run check"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^2.0.4",
+		"@eslint/js": "^10.0.1",
+		"@sveltejs/adapter-netlify": "^6.0.4",
+		"@sveltejs/kit": "^2.57.0",
+		"@sveltejs/vite-plugin-svelte": "^7.0.0",
+		"@tailwindcss/vite": "^4.2.2",
+		"@types/node": "^22",
+		"@wasm-tool/rollup-plugin-rust": "^3.1.5",
+		"eslint": "^10.2.0",
+		"eslint-plugin-svelte": "^3.17.0",
+		"globals": "^17.4.0",
+		"svelte": "^5.55.2",
+		"svelte-check": "^4.4.6",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^6.0.2",
+		"typescript-eslint": "^8.58.1",
+		"vite": "^8.0.7"
+	},
+	"dependencies": {
+		"vite-plugin-wasm-pack": "^0.1.12"
+	}
+}

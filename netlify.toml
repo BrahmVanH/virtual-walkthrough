@@ -1,0 +1,7 @@
+[build]
+  command = "bash build-netlify.sh"
+  publish = "build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  RUST_VERSION = "1.75.0"
